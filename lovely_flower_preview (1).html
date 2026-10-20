@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174a3a">
+  <meta name="description" content="Lovely — một món quà hoa nhỏ gửi đến người thương.">
+  <title>Lovely — Bó hoa dành tặng em</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --site-primary: #D97691;
+      --site-secondary: #174A3A;
+      --site-background: #F8F4EC;
+      --site-on-primary: #FFFFFF;
+      --site-on-secondary: #F8F4EC;
+      --site-on-background: #25382F;
+      --site-font-body: "Trebuchet MS", "Segoe UI", sans-serif;
+      --site-font-heading: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --site-heading-scale: 1;
+      --site-spacing-scale: 1;
+      --site-radius-scale: 1;
+      --site-decoration-opacity: 1;
+      --rose: #E88DA8;
+      --pink: #F4B4C6;
+      --coral: #F3A891;
+      --cream: #F8DCCB;
+      --lilac: #D9C2EE;
+      --leaf: #6F9F78;
+      --leaf-light: #A4C38B;
+      --night: #092219;
+      --night-mid: #143E30;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--site-background);
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100%;
+      margin: 0;
+      font-family: var(--site-font-body);
+      background: light-dark(var(--site-background), color-mix(in srgb, var(--site-background) 12%, #061A13));
+      color: light-dark(var(--site-on-background), #EEF3E9);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #F1B7C8;
+      outline-offset: 4px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .app-root {
+      position: relative;
+      min-height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 0;
+      background-color: light-dark(var(--site-background), color-mix(in srgb, var(--site-background) 12%, #061A13));
+      isolation: isolate;
+    }
+
+    .decor-layer {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      overflow: hidden;
+      opacity: var(--site-decoration-opacity);
+      pointer-events: none;
+      transition: opacity 250ms ease;
+    }
+
+    .decor-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #E7B6B0;
+      box-shadow: 0 0 16px #E7B6B066;
+      animation: drift 7s ease-in-out infinite;
+    }
+
+    .decor-dot:nth-child(1) { left: 9%; top: 23%; animation-delay: -2s; }
+    .decor-dot:nth-child(2) { left: 87%; top: 17%; width: 5px; height: 5px; animation-delay: -4s; }
+    .decor-dot:nth-child(3) { left: 80%; top: 69%; width: 8px; height: 8px; animation-delay: -1s; }
+    .decor-dot:nth-child(4) { left: 15%; top: 78%; width: 4px; height: 4px; animation-delay: -5s; }
+    .decor-dot:nth-child(5) { left: 50%; top: 11%; width: 4px; height: 4px; animation-delay: -3s; }
+
+    .site-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: calc(22px * var(--site-spacing-scale)) calc(24px * var(--site-spacing-scale));
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      color: var(--site-on-background);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--site-on-secondary);
+      background: var(--site-secondary);
+      font-size: 21px;
+      box-shadow: 0 8px 24px #174A3A20;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .brand-name {
+      font-family: var(--site-font-heading);
+      font-size: calc(23px * var(--site-heading-scale));
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: .02em;
+    }
+
+    .brand-subtitle {
+      color: light-dark(#6E7B70, #B6C7B7);
+      font-size: 10px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .header-note {
+      max-width: 210px;
+      color: light-dark(#718175, #B6C7B7);
+      font-size: 11px;
+      letter-spacing: .13em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .screen {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100svh - 86px);
+    }
+
+    .intro-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 22px 48px;
+      text-align: center;
+      animation: arrive 650ms ease both;
+    }
+
+    .eyebrow {
+      margin: 0 0 15px;
+      color: #B66D7C;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .intro-title {
+      max-width: 690px;
+      margin: 0;
+      color: var(--site-on-background);
+      font-family: var(--site-font-heading);
+      font-size: clamp(34px, calc(47px * var(--site-heading-scale)), 64px);
+      font-weight: 500;
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+
+    .intro-title em {
+      color: #C66F88;
+      font-weight: 500;
+    }
+
+    .intro-copy {
+      max-width: 390px;
+      margin: 17px 0 0;
+      color: light-dark(#69776D, #C4D2C7);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .hero-flower-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 245px;
+      height: 242px;
+      margin: 15px 0 18px;
+    }
+
+    .hero-halo {
+      position: absolute;
+      width: 185px;
+      height: 185px;
+      border: 1px solid #DDA9AD80;
+      border-radius: 50%;
+      box-shadow: 0 0 0 17px #E6C9BA1C, 0 0 0 35px #E6C9BA10;
+      animation: halo-pulse 5s ease-in-out infinite;
+    }
+
+    .hero-stem {
+      position: absolute;
+      z-index: 1;
+      top: 99px;
+      left: 50%;
+      width: 5px;
+      height: 116px;
+      border-radius: 9px;
+      background: linear-gradient(90deg, #4E815C, #91B58B 55%, #4E815C);
+      transform: rotate(7deg);
+      transform-origin: top center;
+    }
+
+    .hero-leaf {
+      position: absolute;
+      z-index: 2;
+      width: 37px;
+      height: 20px;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, #A9C99A, #548762);
+    }
+
+    .hero-leaf.left {
+      top: 161px;
+      left: 78px;
+      transform: rotate(18deg);
+    }
+
+    .hero-leaf.right {
+      top: 181px;
+      right: 76px;
+      transform: rotate(78deg) scale(.9);
+    }
+
+    .hero-head {
+      position: absolute;
+      z-index: 3;
+      top: 43px;
+      left: 50%;
+      width: 111px;
+      height: 111px;
+      transform: translateX(-50%);
+      animation: flower-sway 4s ease-in-out infinite;
+    }
+
+    .hero-petal {
+      position: absolute;
+      top: 12px;
+      left: 36px;
+      width: 39px;
+      height: 62px;
+      border: 1px solid #B85C7940;
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(155deg, #F8CCD7, #DF7F9D 82%);
+      box-shadow: inset -5px -3px 8px #B75B771C;
+      transform-origin: 50% 82%;
+    }
+
+    .hero-petal:nth-child(1) { transform: rotate(0deg) translateY(-14px); }
+    .hero-petal:nth-child(2) { transform: rotate(45deg) translateY(-14px); }
+    .hero-petal:nth-child(3) { transform: rotate(90deg) translateY(-14px); }
+    .hero-petal:nth-child(4) { transform: rotate(135deg) translateY(-14px); }
+    .hero-petal:nth-child(5) { transform: rotate(180deg) translateY(-14px); }
+    .hero-petal:nth-child(6) { transform: rotate(225deg) translateY(-14px); }
+    .hero-petal:nth-child(7) { transform: rotate(270deg) translateY(-14px); }
+    .hero-petal:nth-child(8) { transform: rotate(315deg) translateY(-14px); }
+
+    .hero-center {
+      position: absolute;
+      z-index: 4;
+      top: 44px;
+      left: 43px;
+      width: 28px;
+      height: 28px;
+      border: 4px solid #E6B35F;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FFF0B5, #D08C43);
+      box-shadow: 0 0 0 4px #FFF0B533;
+    }
+
+    .primary-button,
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 49px;
+      padding: 13px 23px;
+      border: 0;
+      border-radius: calc(24px * var(--site-radius-scale));
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .primary-button {
+      color: var(--site-on-primary);
+      background: var(--site-primary);
+      box-shadow: 0 10px 24px #CA71852B;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px #CA718540;
+    }
+
+    .secondary-button {
+      color: var(--site-on-secondary);
+      background: var(--site-secondary);
+    }
+
+    .secondary-button:hover {
+      transform: translateY(-2px);
+      background: #236248;
+    }
+
+    .tiny-note {
+      margin-top: 13px;
+      color: light-dark(#8B968C, #9FB3A3);
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+
+    .garden-screen {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100svh - 86px);
+      overflow: hidden;
+      padding: 36px 18px 30px;
+      color: #F9F3E9;
+      background: radial-gradient(ellipse at 50% 54%, #23513C 0%, #143A2C 39%, #092219 78%);
+      animation: arrive 600ms ease both;
+    }
+
+    .garden-screen::before {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 85%, #E4C29313, transparent 50%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .garden-topline {
+      position: relative;
+      z-index: 3;
+      margin: 0 0 5px;
+      color: #D7B3A6;
+      font-size: 10px;
+      letter-spacing: .24em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .garden-title {
+      position: relative;
+      z-index: 3;
+      margin: 0;
+      color: #FFF6EC;
+      font-family: var(--site-font-heading);
+      font-size: clamp(30px, calc(42px * var(--site-heading-scale)), 54px);
+      font-weight: 500;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .garden-subtitle {
+      position: relative;
+      z-index: 3;
+      max-width: 400px;
+      margin: 10px 0 0;
+      color: #C2D3C4;
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .bouquet {
+      position: relative;
+      z-index: 2;
+      width: min(760px, 100%);
+      height: clamp(310px, 48vh, 450px);
+      margin: 0 auto -2px;
+    }
+
+    .bouquet::after {
+      position: absolute;
+      right: 7%;
+      bottom: 1%;
+      left: 7%;
+      height: 22px;
+      border-radius: 50%;
+      background: #00000020;
+      filter: blur(11px);
+      content: "";
+    }
+
+    .plant {
+      position: absolute;
+      bottom: var(--bottom);
+      left: var(--x);
+      width: var(--size);
+      height: var(--height);
+      transform: translateX(-50%) rotate(var(--tilt));
+      transform-origin: 50% 100%;
+      animation: plant-rise 1s cubic-bezier(.2,.75,.25,1) both;
+      animation-delay: var(--delay);
+    }
+
+    .stem {
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - 2px);
+      width: 4px;
+      height: calc(var(--height) - 25px);
+      border-radius: 99px;
+      background: linear-gradient(90deg, #3F7550, #81AA78 58%, #416F4C);
+      transform: rotate(var(--stem-tilt, 0deg));
+      transform-origin: bottom center;
+    }
+
+    .stem-leaf {
+      position: absolute;
+      z-index: 1;
+      width: calc(var(--size) * .51);
+      height: calc(var(--size) * .23);
+      border: 1px solid #BCD0A033;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, #A1C48B, #528361 75%);
+    }
+
+    .stem-leaf.leaf-left {
+      bottom: 32%;
+      left: 7%;
+      transform: rotate(17deg);
+    }
+
+    .stem-leaf.leaf-right {
+      right: 5%;
+      bottom: 19%;
+      transform: rotate(75deg) scale(.9);
+    }
+
+    .flower-head {
+      position: absolute;
+      z-index: 2;
+      bottom: var(--head-bottom);
+      left: 50%;
+      width: var(--size);
+      height: var(--size);
+      transform: translateX(-50%);
+      transform-origin: 50% 90%;
+      animation: flower-sway 4.8s ease-in-out infinite;
+      animation-delay: calc(var(--delay) + .6s);
+    }
+
+    .flower-petal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 34%;
+      height: 62%;
+      margin-top: -40%;
+      margin-left: -17%;
+      border: 1px solid #FFFFFF30;
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(155deg, color-mix(in srgb, var(--flower-color) 54%, white), var(--flower-color) 76%);
+      box-shadow: inset -5px -3px 7px #55273A12;
+      transform-origin: 50% 78%;
+      transform: rotate(calc(var(--petal-index) * 51.43deg)) translateY(-13%);
+    }
+
+    .flower-center {
+      position: absolute;
+      z-index: 5;
+      top: 39%;
+      left: 39%;
+      width: 22%;
+      height: 22%;
+      border: 3px solid #E8BC70;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #FFF1BC, #C98541);
+      box-shadow: 0 0 0 4px #F3D69D1D, 0 0 18px #F8D48C18;
+    }
+
+    .garden-bottom {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 11px;
+      margin-top: -3px;
+      text-align: center;
+    }
+
+    .garden-bottom .primary-button {
+      color: #183D2E;
+      background: #F3D5C6;
+      box-shadow: 0 12px 30px #00000024;
+    }
+
+    .garden-bottom .primary-button:hover {
+      background: #FFE6DB;
+    }
+
+    .garden-footnote {
+      margin: 0;
+      color: #B9CBBB;
+      font-size: 11px;
+      letter-spacing: .05em;
+    }
+
+    .back-button {
+      position: absolute;
+      z-index: 4;
+      top: 17px;
+      left: 18px;
+      padding: 8px 12px;
+      border: 1px solid #FFFFFF28;
+      border-radius: 999px;
+      color: #DDE8DE;
+      background: #FFFFFF0A;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .letter-modal {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #07170FCC;
+      backdrop-filter: blur(9px);
+      animation: fade-in 220ms ease both;
+    }
+
+    .letter-card {
+      position: relative;
+      width: min(480px, 100%);
+      max-height: min(88svh, 760px);
+      overflow: auto;
+      padding: clamp(28px, calc(42px * var(--site-spacing-scale)), 46px);
+      border: 1px solid #D1B59C99;
+      border-radius: calc(5px * var(--site-radius-scale));
+      color: #344238;
+      background: #FAF4E8;
+      box-shadow: 0 32px 90px #00000055;
+      text-align: center;
+    }
+
+    .letter-card::before,
+    .letter-card::after {
+      position: absolute;
+      right: 15px;
+      left: 15px;
+      height: 7px;
+      border-top: 1px solid #D2BDA4;
+      border-bottom: 1px solid #D2BDA4;
+      content: "";
+    }
+
+    .letter-card::before { top: 12px; }
+    .letter-card::after { bottom: 12px; }
+
+    .letter-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border: 0;
+      border-radius: 50%;
+      color: #5A6C5F;
+      background: #EADFD0;
+      cursor: pointer;
+      font-size: 21px;
+    }
+
+    .letter-flower {
+      margin: 0 0 14px;
+      font-size: 31px;
+    }
+
+    .letter-kicker {
+      margin: 0 0 10px;
+      color: #B46D7D;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .letter-title {
+      margin: 0;
+      color: #35503E;
+      font-family: var(--site-font-heading);
+      font-size: clamp(30px, calc(35px * var(--site-heading-scale)), 43px);
+      font-weight: 500;
+      line-height: 1.14;
+    }
+
+    .letter-body {
+      margin: 20px 0 25px;
+      color: #68766B;
+      font-family: var(--site-font-body);
+      font-size: 15px;
+      line-height: 1.9;
+      white-space: pre-line;
+    }
+
+    .letter-signoff {
+      margin: -8px 0 23px;
+      color: #B46D7D;
+      font-family: var(--site-font-heading);
+      font-size: 21px;
+      font-style: italic;
+    }
+
+    .letter-card .primary-button {
+      min-width: 164px;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 19px;
+      color: light-dark(#879187, #92A995);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .fade-switch {
+      animation: arrive 450ms ease both;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(8px, -16px, 0) rotate(40deg); }
+    }
+
+    @keyframes halo-pulse {
+      0%, 100% { transform: scale(.97); opacity: .65; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+
+    @keyframes flower-sway {
+      0%, 100% { rotate: -2deg; }
+      50% { rotate: 3deg; }
+    }
+
+    @keyframes plant-rise {
+      from { opacity: 0; translate: 0 22px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+
+    @media (max-width: 560px) {
+      .site-header {
+        padding: 17px 18px;
+      }
+
+      .brand-mark {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand-name {
+        font-size: 21px;
+      }
+
+      .brand-subtitle {
+        font-size: 9px;
+        letter-spacing: .1em;
+      }
+
+      .header-note {
+        max-width: 105px;
+        font-size: 9px;
+        line-height: 1.55;
+      }
+
+      .screen {
+        min-height: calc(100svh - 72px);
+      }
+
+      .intro-screen {
+        padding: 8px 20px 34px;
+      }
+
+      .intro-title {
+        font-size: clamp(34px, 10vw, 47px);
+      }
+
+      .hero-flower-wrap {
+        width: 225px;
+        height: 220px;
+        margin: 8px 0 13px;
+      }
+
+      .hero-halo {
+        width: 166px;
+        height: 166px;
+      }
+
+      .hero-stem {
+        top: 88px;
+        height: 112px;
+      }
+
+      .hero-head {
+        top: 30px;
+        transform: translateX(-50%) scale(.94);
+      }
+
+      .hero-leaf.left { top: 148px; left: 66px; }
+      .hero-leaf.right { top: 164px; right: 63px; }
+
+      .garden-screen {
+        min-height: calc(100svh - 72px);
+        padding: 62px 12px 26px;
+      }
+
+      .garden-title {
+        font-size: 35px;
+      }
+
+      .garden-subtitle {
+        max-width: 310px;
+        font-size: 12px;
+      }
+
+      .bouquet {
+        height: clamp(290px, 43vh, 370px);
+        margin-top: 10px;
+      }
+
+      .plant {
+        scale: .84;
+      }
+
+      .plant:nth-child(1), .plant:nth-child(3), .plant:nth-child(5) {
+        scale: .76;
+      }
+
+      .plant:nth-child(6), .plant:nth-child(7) {
+        scale: .7;
+      }
+
+      .garden-bottom .primary-button {
+        min-height: 47px;
+        padding: 12px 18px;
+      }
+
+      .back-button {
+        top: 13px;
+        left: 12px;
+      }
+
+      .letter-card {
+        padding: 40px 25px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-root" id="app-root">
+    <div class="decor-layer" aria-hidden="true">
+      <span class="decor-dot"></span>
+      <span class="decor-dot"></span>
+      <span class="decor-dot"></span>
+      <span class="decor-dot"></span>
+      <span class="decor-dot"></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" id="brand-home" aria-label="Lovely — về trang đầu">
+        <span class="brand-mark" aria-hidden="true">✿</span>
+        <span class="brand-copy">
+          <span class="brand-name">Lovely</span>
+          <span class="brand-subtitle">Nơi gửi gắm yêu thương</span>
+        </span>
+      </a>
+      <div class="header-note">Một món quà nhỏ<br>chỉ dành riêng cho em</div>
+    </header>
+
+    <section class="screen intro-screen" id="intro-screen" aria-labelledby="intro-title">
+      <p class="eyebrow">A little thing for you</p>
+      <h1 class="intro-title" id="intro-title">Một bông hoa,<br><em>dành riêng cho em.</em></h1>
+      <p class="intro-copy">Có những điều dịu dàng chẳng cần nói thật nhiều.<br>Chạm vào bông hoa để nhận món quà nhỏ nhé.</p>
+
+      <div class="hero-flower-wrap" aria-hidden="true">
+        <div class="hero-halo"></div>
+        <div class="hero-stem"></div>
+        <span class="hero-leaf left"></span>
+        <span class="hero-leaf right"></span>
+        <div class="hero-head">
+          <span class="hero-petal"></span><span class="hero-petal"></span>
+          <span class="hero-petal"></span><span class="hero-petal"></span>
+          <span class="hero-petal"></span><span class="hero-petal"></span>
+          <span class="hero-petal"></span><span class="hero-petal"></span>
+          <span class="hero-center"></span>
+        </div>
+      </div>
+
+      <button class="primary-button" id="start-button" type="button">Chạm vào hoa nhé <span aria-hidden="true">↗</span></button>
+      <div class="tiny-note">Một chút bình yên gửi đến em · ♡</div>
+    </section>
+
+    <section class="screen garden-screen" id="garden-screen" aria-labelledby="garden-title" hidden>
+      <button class="back-button" id="back-button" type="button">← Quay lại</button>
+      <p class="garden-topline">For someone special</p>
+      <h2 class="garden-title" id="garden-title">Bó hoa dành tặng em</h2>
+      <p class="garden-subtitle">Mong ngày hôm nay của em có thêm một chút dịu dàng.</p>
+      <div class="bouquet" id="bouquet" role="img" aria-label="Bó hoa nhiều màu đang nở giữa khu vườn ban đêm"></div>
+      <div class="garden-bottom">
+        <button class="primary-button" id="open-letter-button" type="button">Mở lá thư nhỏ <span aria-hidden="true">♡</span></button>
+        <p class="garden-footnote">Gửi em, cùng tất cả những điều tốt lành.</p>
+      </div>
+    </section>
+
+    <footer class="site-footer" id="site-footer">Made with a little love · Lovely</footer>
+
+    <div class="letter-modal" id="letter-modal" role="dialog" aria-modal="true" aria-labelledby="letter-title" aria-describedby="letter-body" hidden>
+      <article class="letter-card">
+        <button class="letter-close" id="close-letter-button" type="button" aria-label="Đóng lá thư">×</button>
+        <p class="letter-flower" aria-hidden="true">🌷</p>
+        <p class="letter-kicker" id="letter-kicker">A note for you</p>
+        <h2 class="letter-title" id="letter-title">Gửi em</h2>
+        <p class="letter-body" id="letter-body">Hôm nay là một ngày đặc biệt dành cho những người con gái đặc biệt.</p>
+        <p class="letter-signoff" id="letter-signoff" hidden>Thương gửi em ♡</p>
+        <button class="primary-button" id="next-letter-button" type="button">Xem tiếp <span aria-hidden="true">→</span></button>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const introScreen = document.getElementById('intro-screen');
+      const gardenScreen = document.getElementById('garden-screen');
+      const startButton = document.getElementById('start-button');
+      const backButton = document.getElementById('back-button');
+      const openLetterButton = document.getElementById('open-letter-button');
+      const letterModal = document.getElementById('letter-modal');
+      const closeLetterButton = document.getElementById('close-letter-button');
+      const nextLetterButton = document.getElementById('next-letter-button');
+      const letterTitle = document.getElementById('letter-title');
+      const letterBody = document.getElementById('letter-body');
+      const letterKicker = document.getElementById('letter-kicker');
+      const letterSignoff = document.getElementById('letter-signoff');
+      const brandHome = document.getElementById('brand-home');
+      const siteFooter = document.getElementById('site-footer');
+      const bouquet = document.getElementById('bouquet');
+      let previousFocus = null;
+      let letterStep = 0;
+
+      const flowers = [
+        { x: '50%', bottom: '1%', size: '95px', height: '292px', headBottom: '215px', color: '#E98AA6', tilt: '0deg', delay: '.08s' },
+        { x: '36%', bottom: '3%', size: '77px', height: '255px', headBottom: '193px', color: '#F2B4C7', tilt: '-8deg', delay: '.2s' },
+        { x: '64%', bottom: '2%', size: '87px', height: '267px', headBottom: '197px', color: '#DABFED', tilt: '8deg', delay: '.32s' },
+        { x: '23%', bottom: '0%', size: '63px', height: '207px', headBottom: '156px', color: '#F2C9A6', tilt: '-13deg', delay: '.42s' },
+        { x: '77%', bottom: '0%', size: '68px', height: '218px', headBottom: '163px', color: '#EBA0A9', tilt: '13deg', delay: '.5s' },
+        { x: '43%', bottom: '14%', size: '58px', height: '319px', headBottom: '272px', color: '#F6D7A1', tilt: '-3deg', delay: '.17s' },
+        { x: '59%', bottom: '15%', size: '59px', height: '326px', headBottom: '278px', color: '#F1A4B7', tilt: '4deg', delay: '.26s' }
+      ];
+
+      function makeFlower(config, index) {
+        const plant = document.createElement('div');
+        plant.className = 'plant';
+        plant.style.setProperty('--x', config.x);
+        plant.style.setProperty('--bottom', config.bottom);
+        plant.style.setProperty('--size', config.size);
+        plant.style.setProperty('--height', config.height);
+        plant.style.setProperty('--head-bottom', config.headBottom);
+        plant.style.setProperty('--flower-color', config.color);
+        plant.style.setProperty('--tilt', config.tilt);
+        plant.style.setProperty('--delay', config.delay);
+        plant.style.zIndex = String(index + 1);
+        plant.setAttribute('aria-hidden', 'true');
+
+        const stem = document.createElement('span');
+        stem.className = 'stem';
+        const leftLeaf = document.createElement('span');
+        leftLeaf.className = 'stem-leaf leaf-left';
+        const rightLeaf = document.createElement('span');
+        rightLeaf.className = 'stem-leaf leaf-right';
+        const head = document.createElement('span');
+        head.className = 'flower-head';
+        for (let petalIndex = 0; petalIndex < 7; petalIndex += 1) {
+          const petal = document.createElement('span');
+          petal.className = 'flower-petal';
+          petal.style.setProperty('--petal-index', String(petalIndex));
+          head.appendChild(petal);
+        }
+        const center = document.createElement('span');
+        center.className = 'flower-center';
+        head.appendChild(center);
+        plant.append(stem, leftLeaf, rightLeaf, head);
+        return plant;
+      }
+
+      flowers.forEach((flower, index) => bouquet.appendChild(makeFlower(flower, index)));
+
+      const letterPages = [
+        {
+          title: 'Gửi em 🌷',
+          kicker: 'A note for you',
+          body: 'Hôm nay là một ngày đặc biệt dành cho những người con gái đặc biệt.\n\nMong rằng bó hoa nhỏ này sẽ khiến em mỉm cười, dù chỉ một chút thôi.',
+          signoff: ''
+        },
+        {
+          title: 'Mong em luôn vui',
+          kicker: 'A little wish',
+          body: 'Mong em luôn gặp những điều dịu dàng, có đủ can đảm để theo đuổi điều mình thích và có thật nhiều ngày bình yên.\n\nNhững lúc mệt, em cũng nhớ dành cho bản thân một chút nghỉ ngơi nhé.',
+          signoff: ''
+        },
+        {
+          title: 'Em xứng đáng',
+          kicker: 'With warmth',
+          body: 'Cảm ơn em vì đã là chính mình. Dù hôm nay có thế nào, vẫn mong em nhớ rằng những điều tốt đẹp luôn xứng đáng đến với em.\n\nChúc em có một ngày thật nhẹ nhàng và một trái tim luôn đầy hy vọng.',
+          signoff: 'Thương gửi em ♡'
+        }
+      ];
+
+      function showGarden() {
+        introScreen.hidden = true;
+        gardenScreen.hidden = false;
+        siteFooter.style.color = '#9FB5A4';
+        gardenScreen.classList.remove('fade-switch');
+        void gardenScreen.offsetWidth;
+        gardenScreen.classList.add('fade-switch');
+        backButton.focus({ preventScroll: true });
+      }
+
+      function showIntro() {
+        closeLetter();
+        gardenScreen.hidden = true;
+        introScreen.hidden = false;
+        siteFooter.style.color = '';
+        startButton.focus({ preventScroll: true });
+      }
+
+      function renderLetterStep() {
+        const page = letterPages[letterStep];
+        letterTitle.textContent = page.title;
+        letterKicker.textContent = page.kicker;
+        letterBody.textContent = page.body;
+        letterSignoff.textContent = page.signoff;
+        letterSignoff.hidden = !page.signoff;
+        const finalPage = letterStep === letterPages.length - 1;
+        nextLetterButton.innerHTML = finalPage ? 'Đọc lại từ đầu <span aria-hidden="true">↻</span>' : 'Xem tiếp <span aria-hidden="true">→</span>';
+      }
+
+      function openLetter() {
+        previousFocus = document.activeElement;
+        letterStep = 0;
+        renderLetterStep();
+        letterModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        closeLetterButton.focus({ preventScroll: true });
+      }
+
+      function closeLetter() {
+        letterModal.hidden = true;
+        document.body.style.overflow = '';
+        if (previousFocus && typeof previousFocus.focus === 'function') {
+          previousFocus.focus({ preventScroll: true });
+        }
+      }
+
+      startButton.addEventListener('click', showGarden);
+      backButton.addEventListener('click', showIntro);
+      brandHome.addEventListener('click', (event) => {
+        event.preventDefault();
+        showIntro();
+      });
+      openLetterButton.addEventListener('click', openLetter);
+      closeLetterButton.addEventListener('click', closeLetter);
+      letterModal.addEventListener('click', (event) => {
+        if (event.target === letterModal) closeLetter();
+      });
+      nextLetterButton.addEventListener('click', () => {
+        if (letterStep === letterPages.length - 1) {
+          letterStep = 0;
+        } else {
+          letterStep += 1;
+        }
+        renderLetterStep();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !letterModal.hidden) closeLetter();
+      });
+    })();
+  </script>
+</body>
+</html>
